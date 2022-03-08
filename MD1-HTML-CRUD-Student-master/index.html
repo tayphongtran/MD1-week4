@@ -1,0 +1,122 @@
+<!DOCTYPE html>
+<html lang="en">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.0.0/dist/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+<script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
+<script src="https://cdn.jsdelivr.net/npm/popper.js@1.12.9/dist/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@4.0.0/dist/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
+
+<head>
+    <meta charset="UTF-8">
+    <title>Student Manage</title>
+
+    <style>
+        table {
+            width: 100%;
+        }
+    </style>
+</head>
+<body>
+<h1 style="color: blue">----STUDENT MANAGE----</h1>
+<hr>
+<span style="color: red" id="validate"></span>
+<input type="text" id="name_student">
+<button class="btn btn-info" onclick="createStudent()">create</button>
+<input type="text" id="search" oninput="actionSearch()">
+<button class="btn btn-info" onclick="actionSearch()">Search</button>
+<table border="1">
+    <tr>
+        <th>STT</th>
+        <th>NAME</th>
+        <th>EDIT</th>
+        <th>DELETE</th>
+    </tr>
+    <tbody id="drawTable">
+<!--    <tr>-->
+<!--        <td>1</td>-->
+<!--        <td>Tiến Long</td>-->
+<!--    </tr>-->
+<!--    <tr>-->
+<!--        <td>2</td>-->
+<!--        <td>Huệ Hacker</td>-->
+<!--    </tr>-->
+    </tbody>
+
+</table>
+</body>
+</html>
+<script>
+    let studentList = ['Tiến Long', 'Huệ Hacker', 'Quốc Anh'];
+    let studentSearch = [];
+    function showListStudent() {
+        let drawTable = '';
+        for (let i = 0; i < studentList.length; i++) {
+            //CÁCH 1 : SỬ DỤNG CỘNG CHUỖI THÔNG THƯỜNG: biding biến qua ++
+            let j = i +1;
+            drawTable+='<tr>'+
+                '<td>'+j+'</td>'+
+                '<td>'+studentList[i]+'</td>'+
+                '<td>'+'<button onclick="editStudent('+i+')">Edit</button>'+'</td>'+
+                '<td>'+'<button onclick="deleteStudent('+i+')">Delete</button>'+'</td>'+
+                '</tr>'
+        }
+        document.getElementById('drawTable').innerHTML = drawTable;
+    }
+    showListStudent();
+    function createStudent() {
+        let newStudent = document.getElementById('name_student').value;
+        if(newStudent.trim() === ''){
+            document.getElementById('validate').innerHTML = 'The name Student is required! Please try again!';
+            return;
+        } else {
+            studentList.push(newStudent);
+            // console.log('mảng sau khi push ---> ', studentList)
+            document.getElementById('validate').innerHTML = '<span style="color: green">Create Student Success!!</span>';
+            showListStudent();
+        }
+    }
+    function editStudent(index) {
+        // console.log('index == ', index)
+        let editStudent = prompt('Enter the name Student to Edit ', studentList[index])
+        studentList[index] = editStudent;
+        showListStudent();
+    }
+    function deleteStudent(index) {
+        studentList.splice(index,1)
+        showListStudent();
+    }
+    function showListSearch() {
+        let drawTable = '';
+        for (let i = 0; i < studentSearch.length; i++) {
+            //CÁCH 1 : SỬ DỤNG CỘNG CHUỖI THÔNG THƯỜNG: biding biến qua ++
+            let j = i +1;
+            drawTable+='<tr>'+
+                '<td>'+j+'</td>'+
+                '<td>'+studentSearch[i]+'</td>'+
+                '<td>'+'<button class="btn btn-info" onclick="editStudent('+i+')">Edit</button>'+'</td>'+
+                '<td>'+'<button class="btn btn-info" onclick="deleteStudent('+i+')">Delete</button>'+'</td>'+
+                '</tr>'
+        }
+        document.getElementById('drawTable').innerHTML = drawTable;
+    }
+    function actionSearch() {
+        studentSearch.splice(0, studentSearch.length)
+
+      let search = document.getElementById('search').value;
+        let searchTLC = search.toLowerCase();
+        let studentListTLC = [];
+        if(search===''){
+            showListStudent();
+            return;
+        }
+        //Convert Mảng về chữ thường
+        for (let i = 0; i < studentList.length; i++) {
+            studentListTLC.push(studentList[i].toLowerCase())
+        }
+        for (let i = 0; i < studentListTLC.length; i++) {
+            if(searchTLC===studentListTLC[i]){
+                studentSearch.push(studentList[i]);
+            }
+        }
+        showListSearch();
+    }
+</script>

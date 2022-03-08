@@ -1,0 +1,155 @@
+<!DOCTYPE html>
+<html lang="en">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.0.0/dist/css/bootstrap.min.css"
+      integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+<script src="https://code.jquery.com/jquery-3.2.1.slim.min.js"
+        integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN"
+        crossorigin="anonymous"></script>
+<script src="https://cdn.jsdelivr.net/npm/popper.js@1.12.9/dist/umd/popper.min.js"
+        integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q"
+        crossorigin="anonymous"></script>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@4.0.0/dist/js/bootstrap.min.js"
+        integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl"
+        crossorigin="anonymous"></script>
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.8.1/font/bootstrap-icons.css">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <style>
+        table {
+            width: 100%;
+        }
+    tr {
+        text-align: center;
+        height: 40px;
+        width: 200px;
+        border-bottom: 1px green solid;
+    }
+    thead {
+        border-width: medium;
+    }
+    input {
+        padding: 4px;
+        margin: 30px 10px 30px 52px;
+    }
+    </style>
+</head>
+<body>
+<h1>Tập làm quen với bạn T Nú</h1>
+<input type="text" id="dataTnu">
+<button class="btn btn-info" onclick="creatTnus()">Creat</button>
+<input type="text" id="searchTnu" oninput="actionSearchTnu()">
+<button class="btn btn-info" onclick="actionSearchTnu()">Search</button>
+<h1>Danh Sach Tnus ở đây</h1>
+<table border="1">
+    <thead>
+    <tr>
+        <th>STT</th>
+        <th>Name</th>
+        <th>Edit</th>
+        <th>Delete</th>
+    </tr>
+    </thead>
+    <tbody id="resultTnus" >
+    <!--    <tr>-->
+    <!--&lt;!&ndash;        <td>ID=1</td>&ndash;&gt;-->
+    <!--&lt;!&ndash;        <td>Name</td>&ndash;&gt;-->
+    <!--&lt;!&ndash;        <td>?</td>&ndash;&gt;-->
+    <!--    </tr>-->
+    </tbody>
+</table>
+</body>
+</html>
+<script>
+    let listTnu = ['anhhai', 'anhtuan', 'anhviet', 'anhthu'];
+    let searchTnu = [];
+
+    function initTnus() {
+        let resultTnu = '';
+
+        for (let i = 0; i < listTnu.length; i++) {
+            // resultTnu += '<tr>' +
+            //     ' <td>' + i + '</td>' +
+            //     ' <td>' + listTnu[i] + '</td>' +
+            //     '  <td>' + '<button onclick="editTnu('+i+')">Edit</button>' + ' </td>' +
+            //     '  <td>' + '<button onclick="deleteTnu('+i+')">Delete</button>' + ' </td>' +
+            //     ' </tr>'
+            // // console.log(resultTnu)
+            resultTnu += `
+                    <tr style="border-bottom: 1px green solid">
+                        <td>${i + 1}</td>
+                        <td>${listTnu[i]}</td>
+                        <td><button class="btn " onclick="editTnu(${i})"><i class="bi bi-pencil-square" style="color: blue; padding: 12px;"></i></button></td>
+                        <td><button class="btn " onclick="deleteTnu(${i})"><i class="bi bi-file-minus" style="color: red ;padding: 12px;"></i></button></td>
+                    </tr>
+
+            `
+        }
+        document.getElementById('resultTnus').innerHTML = resultTnu
+    }
+
+    initTnus();
+
+    function creatTnus() {
+        let creatTnu = document.getElementById('dataTnu').value;
+        if (creatTnu.trim() === '') { //check creatTnu có giá trị không
+            initTnus()   // nếu không có giá trị thì gọi lại hàm trên
+            return;
+        } else {
+            listTnu.push(creatTnu) // nếu có thông tin thì push creatTnu vào mảng listTnu
+            initTnus();
+        }
+    }
+
+    function deleteTnu(index) {
+
+        listTnu.splice(index, 1)
+
+        initTnus();
+    }
+
+    function editTnu(index) {
+        editTnus = prompt('nhập thông tin cần sửa : ', listTnu[index])
+        listTnu[index] = editTnus
+        initTnus();
+    }
+
+    function showSearchtnus() {
+        let resultTnu = '';
+        for (let i = 0; i < searchTnu.length; i++) {
+            resultTnu += `
+                    <tr>
+                        <td>${j}</td>
+                        <td>${searchTnu[i]}</td>
+                        <td><button onclick="editTnu(${i})">Edit</button></td>
+                        <td><button onclick="deleteTnu(${i})">Delete</button></td>
+                    </tr>
+
+            `
+        }
+        document.getElementById('resultTnus').innerHTML = resultTnu
+    }
+
+    function actionSearchTnu() {
+        searchTnu.splice(0, searchTnu.length);
+        // console.log(searchTnu.splice(0,searchTnu.length))
+        let search = document.getElementById('searchTnu').value;
+        let searchTLC = search.toLowerCase();
+        let tnusTLClist = [];
+        if (search === '') {
+            initTnus();
+            return
+        }
+        // covert mảng về chữ thường
+        for (let i = 0; i < listTnu.length; i++) {
+            tnusTLClist.push(listTnu[i].toLowerCase());
+        }
+        for (let i = 0; i < searchTLC.length; i++) {
+            if (searchTLC === tnusTLClist[i]) {
+                searchTnu.push(listTnu[i])
+            }
+        }
+        showSearchtnus();
+    }
+
+</script>
