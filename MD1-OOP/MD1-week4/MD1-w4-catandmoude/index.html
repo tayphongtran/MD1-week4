@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+
+</body>
+</html>
+<script>
+    class Animal {
+
+        constructor(name,weight,speed,say) {
+            this.name = name;
+            this.weight = weight;
+            this.speed = speed;
+            this.say = say;
+        }
+        setName(name){
+            this.name = name;
+        }
+        getName(){
+            return this.name;
+        }
+        setWeight(weight){
+            this.weight = weight;
+        }
+        getWeight(){
+            return this.weight
+        }
+        setSpeed(speed){
+            this.speed = speed;
+        }
+        getSpeed(){
+            return this.speed;
+        }
+        setSay(say){
+            this.say = say;
+        }
+        getSay(){
+            return this.say
+        }
+    }
+    class Mouse extends Animal{
+
+        constructor(name, weight, speed, say,status) {
+            super(name, weight, speed, say);
+            this.status = status;
+        }
+        getStatus(){
+            if (this.status){
+                console.log('twitch đã lên bảng đếm số');
+            }else {
+                console.log('Đố anh bắt được em')
+            }
+            return this.status
+        }
+        setStatus(status){
+            this.status = status;
+        }
+    }
+    class Yumi extends Animal {
+
+        constructor(name, weight, speed, say) {
+            super(name, weight, speed, say);
+        }
+
+        catchMouse(mouse){
+            if (super.getSpeed()>super.mouse.getSpeed()){
+                Mouse.getStatus(true);
+                console.log('Bắt được mày rồi nhá!!! he he');
+            }else {
+                console.log('nó chạy nhanh thế nhở! chịu thôi!!!');
+            }
+        }
+        eatMouse(mouse){
+            if (mouse.getStatus()){
+                super.setWeight(super.getWeight() + mouse.getWeight());
+                console.log('bắt được tao rồi thì ăn đi đồ ngu', super.getWeight());
+            }else {
+                console.log("không bắt được em đâu lêu lêu");
+            }
+        }
+    }
+    let Mouse1 = new Mouse('Jerry', 50, 50, 'haha',false);
+    let Mouse2 = new Mouse('JerrySlow',100, 20, 'đen thôi',false)
+    let catBig = new Yumi('TomMatNet', 70, 35,'hãy đợi đấy')
+</script>
