@@ -1,0 +1,136 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+<h1>Iphone</h1>
+<button id="onOff-iphone" onclick="onOff(this.id)">POWER</button>
+<button id="energy-iphone" onclick="checkEnergy(this.id)">ENERGY</button>
+<button id="message-iphone" onclick="sendMessage(this.id)">SEND</button>
+<br>
+<textarea id="iphone" style="..." cols="40" rows="10"></textarea>
+<hr>
+<h1>Nokia</h1>
+<button id="onOff-nokia" onclick="onOff(this.id)">POWER</button>
+<button id="energy-nokia" onclick="checkEnergy(this.id)">ENERGY</button>
+<button id="message-nokia" onclick="sendMessage(this.id)">SEND</button>
+<button id="inbox-nokia" onclick="checkInBox(this.id)">INBOX</button>
+<br>
+<textarea id="nokia" cols="40" rows="10"></textarea>
+</body>
+</html>
+<script>
+    class Mobile {
+        constructor(name, status, energy, inbox, outbox) {
+            this.name = name;
+            this.status = status;
+            this.energy = energy;
+            this.inBox = [];
+            this.outBox = [];
+        }
+
+        getName() {
+            return this.name
+        }
+
+        setName(name) {
+            this.name = name;
+        }
+
+        getStatus() {
+            return this.status;
+        }
+
+        setStatus() {
+            this.status = !this.status;
+        }
+
+        getEnergy() {
+            return this.energy;
+        }
+
+        setEnergy(energy) {
+            this.energy = energy;
+        }
+
+        getInbox() {
+            return this.inBox;
+        }
+
+        setInbox(inbox) {
+            this.inBox = inbox;
+        }
+
+        getOutbox() {
+            return this.outBox;
+        }
+
+        setOutbox(outbox) {
+            this.outBox = outbox;
+        }
+    }
+
+    let Iphone = new Mobile('Iphone', false, 100);
+    let Nokia = new Mobile('Nokia', false, 100);
+
+    function onOff(id) {
+        console.log('check id', id);
+        if (id === 'onOff-iphone') {
+            if (Iphone.getStatus()) {
+                Iphone.setStatus();
+                document.getElementById('onOff-iphone').innerHTML = 'OF';
+            } else {
+                Iphone.setStatus();
+                document.getElementById('onOff-iphone').innerHTML = 'ON';
+            }
+        } else if (id === 'onOff-nokia') {
+            if (Nokia.getStatus()) {
+                Nokia.setStatus();
+                document.getElementById('onOff-nokia').innerHTML = 'OF'
+            } else {
+                Nokia.setStatus();
+                document.getElementById('onOff-nokia').innerHTML = 'ON'
+            }
+        }
+    }
+
+    function checkEnergy(id) {
+        if (id === 'energy-iphone') {
+            document.getElementById('energy-iphone').innerHTML = Iphone.getEnergy() + '%';
+        }
+        if (id === 'energy-nokia') {
+            document.getElementById('energy-nokia').innerHTML = Nokia.getEnergy() + '%';
+        }
+
+    }
+    let  count = 0;
+    function sendMessage(id){
+        if (id === 'message-iphone') {
+            Iphone.getOutbox().push(document.getElementById('iphone').value)
+            // console.log(Iphone.getOutbox())
+            document.getElementById('nokia').value = 'bạn có '+ count++ +' tin nhắn'
+            document.getElementById('iphone').value = ' '
+        }
+        if (id === 'message-nokia') {
+            Iphone.getOutbox().push(document.getElementById('nokia').value)
+            // console.log(Nokia.getOutbox())
+            document.getElementById('nokia').value = ' '
+        }
+    }
+    function checkInBox(id){
+        if (id === 'inbox-nokia'){
+            Nokia.setInbox(Iphone.getOutbox());
+            console.log(Nokia.setOutbox())
+            document.getElementById('nokia').value = Nokia.getInbox().join('-')
+            count = 0
+        }
+    }
+    function downEnergy(){
+        Iphone.setEnergy(Iphone.getEnergy()-1)
+        document.getElementById('energy-iphone').innerHTML = Iphone.getEnergy() + '%'
+        setTimeout(downEnergy,4000)
+    }
+    downEnergy();
+</script>

@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>tivi</title>
+</head>
+<body>
+<script>
+    class Tivi{
+        constructor(channel,volume,status) {
+            this.channel = channel;
+            this.volume = volume;
+            this.status = status;
+        }
+        getChannel(){
+            return this.channel;
+        }
+        setChannel(newChannel){
+            this.channel = newChannel;
+        }
+        getVolume(){
+            return this.volume;
+        }
+        setVolume(newVolume){
+            this.volume = newVolume;
+        }
+        getStatus(){
+            return this.status;
+        }
+        setStatus(newStatus){
+            this.status = newStatus;
+        }
+    }
+    class Remote{
+        tatMo(tivi){
+            tivi.setStatus(!tivi.getStatus());
+        }
+        changeChannel(tivi,channel){
+            if(tivi.getStatus()){
+                tivi.setChannel(channel);
+            }else {
+                console.log('bật tivi lên đi bro!')
+            }
+        }
+        upVolume(tivi){
+            if (tivi.getStatus()){
+                if(tivi.getVolume()<10){
+                    tivi.setVolume(tivi.getVolume()+1)
+                }else {
+                    console.log('ấn vừa thôi');
+                }
+            }else {
+                console.log('bật tivi lên đi bro!')
+            }
+        }
+        downVolume(tivi){
+            if (tivi.getStatus()){
+                if(tivi.getVolume()>0){
+                    tivi.setVolume(tivi.getVolume()-1)
+                }else {
+                    console.log('Mất tiếng rồi kìa!');
+                }
+            }else {
+                console.log('bật tivi lên đi bro!')
+            }
+        }
+
+
+    }
+    let rm1 = new Remote()
+    let tv1 = new Tivi(2,1,false)
+</script>
+</body>
+</html>

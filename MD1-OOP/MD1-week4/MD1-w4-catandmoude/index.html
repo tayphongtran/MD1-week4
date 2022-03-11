@@ -49,7 +49,7 @@
             this.status = status;
         }
         getStatus(){
-            if (this.status){
+            if  (this.status){
                 console.log('twitch đã lên bảng đếm số');
             }else {
                 console.log('Đố anh bắt được em')
@@ -60,14 +60,14 @@
             this.status = status;
         }
     }
-    class Yumi extends Animal {
+    class Cat extends Animal {
 
         constructor(name, weight, speed, say) {
             super(name, weight, speed, say);
         }
 
         catchMouse(mouse){
-            if (super.getSpeed()>super.mouse.getSpeed()){
+            if (super.getSpeed() > super.mouse.getSpeed()){
                 Mouse.getStatus(true);
                 console.log('Bắt được mày rồi nhá!!! he he');
             }else {
@@ -83,7 +83,7 @@
             }
         }
     }
-    let Mouse1 = new Mouse('Jerry', 50, 50, 'haha',false);
-    let Mouse2 = new Mouse('JerrySlow',100, 20, 'đen thôi',false)
-    let catBig = new Yumi('TomMatNet', 70, 35,'hãy đợi đấy')
+    let Mouse1 = new Mouse('Jerry', 30, 30, 'haha',false);
+    let Mouse2 = new Mouse('JerrySlow',50, 50, 'đen thôi',false);
+    let cat = new Cat('TomMatNet', 70, 40,'hãy đợi đấy');
 </script>
